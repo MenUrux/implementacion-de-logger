@@ -6,6 +6,7 @@ import TicketsController from '../controllers/tickets.controller.js';
 const router = Router();
 
 router.get('/', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const users = await CartsController.get({});
     res.status(200).json(users);
@@ -15,6 +16,7 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/:uid', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const { params: { uid } } = req;
     const user = await CartsController.getById(uid);
@@ -38,6 +40,7 @@ router.post('/', async (req, res, next) => {
 });
 
 router.put('/:uid', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const { body, params: { uid } } = req;
     const updateResult = await CartsController.update(uid, body);
@@ -55,6 +58,7 @@ router.put('/:uid', async (req, res, next) => {
 
 
 router.delete('/:uid', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const { params: { uid } } = req;
     const deleteResult = await CartsController.delete(uid);
@@ -69,6 +73,7 @@ router.delete('/:uid', async (req, res, next) => {
 });
 
 router.post('/register', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const newUser = await CartsController.register(req.body);
     res.status(201).json(newUser);
@@ -80,6 +85,7 @@ router.post('/register', async (req, res, next) => {
 
 //Todavía sigo arreglando esto.
 router.post('/:cid/purchase', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   const cartId = req.params.cid;
 
   try {

@@ -12,6 +12,7 @@ const baseUrl = 'http://localhost:8080/'
 
 
 router.get('/', async (req, res) => {
+  req.logger.info(generateLoggerMessage(req));
   const { limit = 8, page = 1, sort, search } = req.query;
   const criteria = {};
   const options = { limit, page };
@@ -31,6 +32,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:pid', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const { pid } = req.params;
     const product = await ProductMongoDbDao.getById(pid);
@@ -52,6 +54,7 @@ router.get('/:pid', async (req, res, next) => {
 
 
 router.post('/', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const { body } = req;
     const {

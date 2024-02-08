@@ -1,9 +1,12 @@
 import { Router } from 'express';
 import UsersController from '../../controllers/users.controller.js';
+import { generateLoggerMessage } from '../../utils/logger.js';
+
 
 const router = Router();
 
 router.get('/', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const users = await UsersController.get({});
     res.status(200).json(users);
@@ -13,6 +16,7 @@ router.get('/', async (req, res, next) => {
 });
 
 router.get('/:uid', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const { params: { uid } } = req;
     const user = await UsersController.getById(uid);
@@ -26,6 +30,7 @@ router.get('/:uid', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const { body } = req;
     const user = await UsersController.create(body);
@@ -36,6 +41,7 @@ router.post('/', async (req, res, next) => {
 });
 
 router.put('/:uid', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const { body, params: { uid } } = req;
     const updateResult = await UsersController.update(uid, body);
@@ -53,6 +59,7 @@ router.put('/:uid', async (req, res, next) => {
 
 
 router.delete('/:uid', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const { params: { uid } } = req;
     const deleteResult = await UsersController.delete(uid);

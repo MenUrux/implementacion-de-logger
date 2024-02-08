@@ -8,6 +8,7 @@ import { generateToken, validateToken, authMiddleware, authRolesMiddleware } fro
 const router = Router();
 
 router.post('/register', async (req, res, next) => {
+  req.logger.info(generateLoggerMessage(req));
   try {
     const newUser = await UsersController.register(req.body);
     if (newUser) {
@@ -34,6 +35,7 @@ const auth = async (req, res, next) => {
 router.post('/login', UsersController.login);
 
 router.get('/current', authMiddleware('jwt'), authRolesMiddleware('admin'), (req, res) => {
+  req.logger.info(generateLoggerMessage(req));
   res.status(200).send(req.user);
 });
 

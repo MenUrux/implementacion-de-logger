@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
             };
             mockingProducts.push(product);
         }
-
+        req.logger.info('Realizando mocking de productos');
         res.json(mockingProducts);
     } catch (error) {
         next(error);
